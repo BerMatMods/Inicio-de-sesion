@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✦ ACCESO RESTRINGIDO ✦</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/vwhhd5.png">
+    <style>
+        /* ===== GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #f0e6ff;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== LOGIN SCREEN ===== */
+        #loginScreen {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0d0a15 url('https://i.postimg.cc/XJyY4tCS/1763421218.png') no-repeat center center/cover;
+            padding: 16px;
+        }
+
+        .container {
+            background: rgba(10, 7, 20, 0.52);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                0 0 12px rgba(147, 112, 219, 0.15);
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            position: relative;
+            border: 1px solid rgba(147, 112, 219, 0.25);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 1px; left: 1px; right: 1px; bottom: 1px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, rgba(177, 156, 217, 0.15), transparent 85%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .credits {
+            font-size: 0.72rem;
+            color: #d4c9f0;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.4px;
+        }
+
+        .credits span {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            background: linear-gradient(92deg, #B19CD9, #9370DB);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+            background: linear-gradient(95deg, #E6E6FA, #D8BFD8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 1px 3px rgba(147, 112, 219, 0.25);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #d0c6e8;
+            font-size: 0.84rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid rgba(130, 90, 190, 0.3);
+            border-radius: 8px;
+            background: rgba(12, 8, 22, 0.5);
+            color: #f8f4ff;
+            font-size: 0.92rem;
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        input:focus {
+            border-color: #9370DB;
+            box-shadow: 0 0 0 3px rgba(147, 112, 219, 0.2);
+        }
+
+        input::placeholder {
+            color: rgba(210, 200, 240, 0.5);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(147, 112, 219, 0.1);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c5b8e0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.86rem;
+        }
+
+        .toggle-password:hover {
+            background: rgba(147, 112, 219, 0.25);
+            color: #9370DB;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.96rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #9370DB, #B19CD9);
+            color: #0c0818;
+            box-shadow: 
+                0 3px 10px rgba(147, 112, 219, 0.4),
+                0 1px 3px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 5px 14px rgba(147, 112, 219, 0.55),
+                0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: #c8c0e0;
+            border: 1px solid rgba(147, 112, 219, 0.18);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(147, 112, 219, 0.1);
+            color: #f6f2ff;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(147, 112, 219, 0.3), transparent);
+        }
+
+        .divider span {
+            padding: 0 10px;
+            color: #a89ec8;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .links {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 0.82rem;
+        }
+
+        .links a {
+            color: #B19CD9;
+            text-decoration: none;
+            display: block;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+
+        .links a:hover {
+            text-shadow: 0 0 4px rgba(177, 156, 217, 0.5);
+        }
+
+        /* ===== PROTECTED CONTENT ===== */
+        #protectedScreen {
+            display: none;
+            flex: 1;
+            background: #ffffff; /* Fondo blanco como tu web real */
+            position: relative;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: #f0f0f5;
+            border: 1px solid #e0e0e8;
+            border-radius: 8px;
+            color: #6a5acd;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #e8e8f0;
+            color: #5a4ac8;
+            transform: scale(1.05);
+        }
+
+        #baseFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== CONFIRM MODAL ===== */
+        .confirm-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .confirm-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            width: 90%;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .modal-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+        }
+
+        .modal-content p {
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            border: none;
+            font-size: 0.92rem;
+        }
+
+        .modal-btn.cancel {
+            background: #f1f1f5;
+            color: #666;
+        }
+
+        .modal-btn.confirm {
+            background: #ff4d4d;
+            color: white;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e6e6ec;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #e63939;
+        }
+
+        /* ===== OVERLAY & ALERTS ===== */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(5, 3, 12, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loader {
+            width: 40px; height: 40px;
+            position: relative;
+        }
+
+        .loader::before,
+        .loader::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation: rotate 1.8s linear infinite;
+        }
+
+        .loader::before {
+            width: 100%; height: 100%;
+            border: 2.5px solid rgba(177, 156, 217, 0.15);
+        }
+
+        .loader::after {
+            top: 6px; left: 6px;
+            width: 28px; height: 28px;
+            border: 2.2px solid transparent;
+            border-top-color: #9370DB;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .overlay h2 {
+            margin-top: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.05rem;
+            color: #B19CD9;
+        }
+
+        .alert-popup {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(147, 112, 219, 0.2);
+            opacity: 0;
+            transition: all 0.25s ease;
+        }
+
+        .alert-popup.error { background: rgba(180, 50, 50, 0.88); color: #ffe6e6; }
+        .alert-popup.success { background: rgba(40, 140, 80, 0.88); color: #e6f7e6; }
+        .alert-popup.info { background: rgba(60, 90, 160, 0.88); color: #e0e8ff; }
+
+        .alert-popup.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 360px) {
+            .container { padding: 16px; max-width: 280px; }
+            h1 { font-size: 1.3rem; }
+            input, button { padding: 8px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ✦ PANTALLA DE LOGIN ✦ -->
+    <div id="loginScreen">
+        <div class="container">
+            <div class="credits"><span>𖤍BerMat_Code𖤍</span></div>
+            <h1>✦Web Code✦</h1>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginPhone">📱 Número o correo</label>
+                    <input type="text" id="loginPhone" name="phone" placeholder="ej. 930569195" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPass">🔒 Contraseña</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="loginPass" name="password" placeholder="••••••••" autocomplete="off" required>
+                        <button type="button" class="toggle-password" id="toggleLoginPass">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Iniciar sesión</button>
+            </form>
+
+            <div class="divider"><span>o</span></div>
+
+            <div class="links">
+                <a href="#" id="forgotPass">¿Olvidaste tu contraseña?</a>
+                <a href="#" id="createAccount">Crear nueva cuenta</a>
+            </div>
+
+            <form id="registerForm" style="display:none; margin-top:16px;">
+                <div class="form-group">
+                    <label for="regName">👤 Nombre completo</label>
+                    <input type="text" id="regName" name="name" placeholder="Ej. AnthZz Berrocal" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">📱 Número o correo</label>
+                    <input type="text" id="regPhone" name="phone" placeholder="ej. 930569195" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPass">🔒 Contraseña nueva</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="regPass" name="password" placeholder="Mín. 6 caracteres" autocomplete="off" required>
+                        <button type="button" class="toggle-password" id="toggleRegPass">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-login">Crear cuenta</button>
+                <button type="button" id="backToLogin" class="btn-secondary" style="margin-top:8px;">← Volver</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ✦ PANTALLA PROTEGIDA (Base) ✦ -->
+    <div id="protectedScreen">
+        <button id="logoutBtn" class="logout-btn" title="Cerrar sesión">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+        <iframe id="baseFrame" src="https://bermatmods.github.io/Base/"></iframe>
+    </div>
+
+    <!-- ✦ MODAL DE CONFIRMACIÓN ✦ -->
+    <div id="confirmLogoutModal" class="confirm-modal">
+        <div class="modal-content">
+            <h3>¿Cerrar sesión?</h3>
+            <p>¿Estás seguro de que deseas cerrar la sesión? Perderás el acceso temporalmente.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelLogout">Cancelar</button>
+                <button class="modal-btn confirm" id="confirmLogout">Sí, cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✦ MODAL DE RECUPERACIÓN ✦ -->
+    <div id="recoveryModal" class="confirm-modal">
+        <div class="modal-content">
+            <h3>🔐 Recuperación</h3>
+            <p>Contacta al desarrollador para recuperar tu cuenta:</p>
+            <a href="https://wa.me/51930569195" target="_blank" style="display: inline-block; margin: 12px 0; padding: 8px 16px; background: #25D366; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+            <p style="font-size:0.85rem; color:#777;">
+                <b>𖤍BerMat_Code𖤍</b><br>
+                <small>+51 930 569 195</small>
+            </p>
+            <button class="modal-btn cancel" id="closeRecovery" style="width:100%;">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- ✦ OVERLAY & ALERT ✦ -->
+    <div id="overlay" class="overlay">
+        <div class="loader"></div>
+        <h2>Verificando...</h2>
+    </div>
+
+    <div id="alert" class="alert-popup"></div>
+
+    <script>
+        const showAlert = (msg, type = 'error') => {
+            const a = document.getElementById('alert');
+            a.textContent = msg;
+            a.className = `alert-popup ${type}`;
+            a.classList.add('show');
+            setTimeout(() => a.classList.remove('show'), 2400);
+        };
+
+        const showOverlay = () => document.getElementById('overlay').classList.add('active');
+        const hideOverlay = () => document.getElementById('overlay').classList.remove('active');
+
+        // Toggle contraseña
+        const setupToggle = (btnId, inputId) => {
+            const btn = document.getElementById(btnId);
+            const input = document.getElementById(inputId);
+            if (btn && input) {
+                btn.addEventListener('click', () => {
+                    const isPwd = input.type === 'password';
+                    input.type = isPwd ? 'text' : 'password';
+                    btn.innerHTML = `<i class="fas fa-${isPwd ? 'eye-slash' : 'eye'}"></i>`;
+                });
+            }
+        };
+        setupToggle('toggleLoginPass', 'loginPass');
+        setupToggle('toggleRegPass', 'regPass');
+
+        // Cambiar formularios
+        const showForm = (showId, hideId) => {
+            document.getElementById(showId).style.display = 'block';
+            document.getElementById(hideId).style.display = 'none';
+        };
+
+        document.getElementById('createAccount')?.addEventListener('click', e => {
+            e.preventDefault(); showForm('registerForm', 'loginForm');
+        });
+        document.getElementById('backToLogin')?.addEventListener('click', () => showForm('loginForm', 'registerForm'));
+
+        // Modal recuperación
+        const recoveryModal = document.getElementById('recoveryModal');
+        document.getElementById('forgotPass')?.addEventListener('click', e => {
+            e.preventDefault(); recoveryModal.classList.add('active');
+        });
+        ['closeRecovery'].forEach(id => {
+            document.getElementById(id)?.addEventListener('click', () => recoveryModal.classList.remove('active'));
+        });
+
+        // Registro
+        document.getElementById('registerForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            showOverlay();
+            setTimeout(() => {
+                const name = document.getElementById('regName').value.trim();
+                const phone = document.getElementById('regPhone').value.trim();
+                const pass = document.getElementById('regPass').value.trim();
+
+                if (!name || !phone || !pass || pass.length < 6) {
+                    hideOverlay(); showAlert('⚠️ Completa todos los campos');
+                    return;
+                }
+
+                localStorage.setItem('user_' + phone, JSON.stringify({ name, phone, password: pass }));
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', phone);
+
+                hideOverlay();
+                showAlert(`✅ ¡Cuenta creada!\n¡Bienvenido, ${name}!`, 'success');
+                setTimeout(() => {
+                    showForm('loginForm', 'registerForm');
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('protectedScreen').style.display = 'flex';
+                }, 1200);
+            }, 900);
+        });
+
+        // Login
+        document.getElementById('loginForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            showOverlay();
+            setTimeout(() => {
+                const phone = document.getElementById('loginPhone').value.trim();
+                const pass = document.getElementById('loginPass').value.trim();
+
+                if (!phone || !pass) { hideOverlay(); showAlert('⚠️ Campos incompletos'); return; }
+
+                const user = JSON.parse(localStorage.getItem('user_' + phone) || 'null');
+                if (user && user.password === pass) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('currentUser', phone);
+                    hideOverlay();
+                    showAlert(`✅ ¡Hola, ${user.name}!`, 'success');
+                    setTimeout(() => {
+                        document.getElementById('loginScreen').style.display = 'none';
+                        document.getElementById('protectedScreen').style.display = 'flex';
+                    }, 1200);
+                } else {
+                    hideOverlay(); showAlert('❌ Datos incorrectos');
+                }
+            }, 900);
+        });
+
+        // Cerrar sesión (con confirmación)
+        const confirmModal = document.getElementById('confirmLogoutModal');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        logoutBtn?.addEventListener('click', () => {
+            confirmModal.classList.add('active');
+        });
+
+        document.getElementById('cancelLogout')?.addEventListener('click', () => {
+            confirmModal.classList.remove('active');
+        });
+
+        document.getElementById('confirmLogout')?.addEventListener('click', () => {
+            // Limpiar sesión
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            // Volver al login
+            document.getElementById('protectedScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            // Reset campos
+            document.getElementById('loginPhone').value = '';
+            document.getElementById('loginPass').value = '';
+            // Ocultar modal
+            confirmModal.classList.remove('active');
+            showAlert('👋 Sesión cerrada', 'info');
+        });
+
+        // Verificar sesión al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const currentUser = localStorage.getItem('currentUser');
+            if (isLoggedIn && currentUser) {
+                const user = JSON.parse(localStorage.getItem('user_' + currentUser) || 'null');
+                if (user) {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('protectedScreen').style.display = 'flex';
+                    return;
+                }
+            }
+            // Si no, login por defecto (ya visible)
+        });
+    </script>
+</body>
+</html>
